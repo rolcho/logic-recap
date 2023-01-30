@@ -1,1 +1,3 @@
-# logic-recap
+# Logic Recap
+
+Materials for learning together
