@@ -1,0 +1,10 @@
+basic: draw a line
+
+how many levels: draw a tree with 15 level
+
+after draw 
+turn left 30 degrees and back to basic
+turn right 30 back to basic
+turn right 30 back to basic
+
+at level 0 draw a line
