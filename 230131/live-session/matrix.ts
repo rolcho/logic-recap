@@ -15,10 +15,10 @@ function createMatrix(matrixSize: number): number[][] {
   return matrix;
 }
 
-let myNewMatrix: number[][] = createMatrix(5);
+let originalMatrix: number[][] = createMatrix(5);
 
-console.log(myNewMatrix);
-// console.log(myNewMatrix[2][2]);
+console.log(originalMatrix);
+// console.log(originalMatrix[2][2]);
 
 //basic
 function printMatrix(matrix: number[][]): string {
@@ -65,7 +65,17 @@ function diagonalDifference(matrix: number[][]): number {
   return Math.abs(diagonalDifferenceValue);
 }
 
-function changeNumbers(
+function changeNumbers(matrix: number[][], from: number, to: number) {
+  for (let row = 0; row < matrix.length; row++) {
+    for (let column = 0; column < matrix.length; column++) {
+      if (matrix[row][column] === from) {
+        matrix[row][column] = to;
+      }
+    }
+  }
+}
+
+function changeNumbersIntoNewArray(
   matrix: number[][],
   from: number,
   to: number
@@ -81,13 +91,19 @@ function changeNumbers(
     }
     returnMatrix.push(matrixRow);
   }
-  from = 1212;
   return returnMatrix;
 }
 
-console.log(printMatrix(myNewMatrix));
-const changedMatrix = changeNumbers(myNewMatrix, 3, 0);
+console.log('The original matrix:');
+console.log(printMatrix(originalMatrix));
 
+console.log('Change numbers (3->0) in matrix into a new matrix:');
+const changedMatrix = changeNumbersIntoNewArray(originalMatrix, 3, 0);
 console.log(printMatrix(changedMatrix));
-myNewMatrix = changedMatrix;
-console.log(printMatrix(myNewMatrix));
+
+console.log('The original matrix:');
+console.log(printMatrix(originalMatrix));
+
+console.log('Change numbers (6->9) in the original matrix:');
+changeNumbers(originalMatrix, 6, 9);
+console.log(printMatrix(originalMatrix));
