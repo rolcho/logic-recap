@@ -33,16 +33,22 @@ function drawLine(
   startPoint: Point,
   length: number,
   degree: number,
+  strength: number,
   ctx: CanvasRenderingContext2D
 ): Point {
   //calculating line endpoint
   const xCount: number = Math.cos(((Math.PI * 2) / 360) * degree) * length;
   const yCount: number = Math.sin(((Math.PI * 2) / 360) * -degree) * length;
-  const endPoint: Point = new Point(startPoint.getX() + xCount, startPoint.getY() + yCount);
+  const endPoint: Point = new Point(
+    startPoint.getX() + xCount,
+    startPoint.getY() + yCount
+  );
 
   ctx.beginPath();
   ctx.moveTo(startPoint.getX(), startPoint.getY());
   ctx.lineTo(startPoint.getX() + xCount, yCount + startPoint.getY());
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = strength;
   ctx.stroke();
 
   //returning endpoint for further operation
@@ -61,19 +67,37 @@ function drawTree(
   const growLimit: number = 0.8;
 
   //draw one branch and after that calls the branchgrowing three times, if its not the last one
-  const endPoint: Point = drawLine(startPoint, length, degree, ctx);
+  const endPoint: Point = drawLine(startPoint, length, degree, level + 1, ctx);
   if (level > 0) {
-    drawTree(level - 1, endPoint, degree - branchDegree, length * growLimit, ctx);
+    drawTree(
+      level - 1,
+      endPoint,
+      degree - branchDegree,
+      length * growLimit,
+      ctx
+    );
     drawTree(level - 1, endPoint, degree, length * growLimit, ctx);
-    drawTree(level - 1, endPoint, degree + branchDegree, length * growLimit, ctx);
+    drawTree(
+      level - 1,
+      endPoint,
+      degree + branchDegree,
+      length * growLimit,
+      ctx
+    );
   }
 }
 
 // setting up initial values
-const initialGrowingPoint: Point = new Point(canvas.height - 10, canvas.width / 2);
+const initialGrowingPoint: Point = new Point(
+  canvas.width / 2,
+  canvas.height - 10
+);
 const initialGrowingDegree: number = 90;
 const initialGrowingDistance = canvas.height / 5;
 const initialGrowingLevels = 8;
+ctx.beginPath();
+ctx.fillStyle = 'midnightblue';
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 // calling the tree
 drawTree(
